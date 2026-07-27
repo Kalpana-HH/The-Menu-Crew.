@@ -428,15 +428,11 @@ export async function loginWithGoogle(
       return userProfile;
     }
 
-    // If popup fails and no real email was provided, signal that user email & name prompt modal is needed
-    const customError: any = new Error(
+    throw new Error(
       code === 'auth/unauthorized-domain' || e?.message?.includes('not authorized')
-        ? `Domain authorization constraint on ${typeof window !== 'undefined' ? window.location.hostname : 'domain'}`
-        : "Google Sign-In popup could not complete."
+        ? `Google Sign-In is restricted for ${typeof window !== 'undefined' ? window.location.hostname : 'this domain'}.`
+        : (e?.message || "Google Sign-In could not complete.")
     );
-    customError.needsGooglePrompt = true;
-    customError.originalCode = code;
-    throw customError;
   }
 }
 
