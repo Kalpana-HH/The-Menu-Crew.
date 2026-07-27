@@ -31,12 +31,12 @@ const metaEnv = (import.meta as any).env || {};
 const rawConfig = (appletConfig as any)?.default || (appletConfig as any) || {};
 
 const firebaseConfig = {
-  apiKey: metaEnv.VITE_FIREBASE_API_KEY || rawConfig.apiKey || '',
-  authDomain: metaEnv.VITE_FIREBASE_AUTH_DOMAIN || rawConfig.authDomain || '',
-  projectId: metaEnv.VITE_FIREBASE_PROJECT_ID || rawConfig.projectId || '',
-  storageBucket: metaEnv.VITE_FIREBASE_STORAGE_BUCKET || rawConfig.storageBucket || '',
-  messagingSenderId: metaEnv.VITE_FIREBASE_MESSAGING_SENDER_ID || rawConfig.messagingSenderId || '',
-  appId: metaEnv.VITE_FIREBASE_APP_ID || rawConfig.appId || '',
+  apiKey: metaEnv.VITE_FIREBASE_API_KEY || rawConfig.apiKey || 'AIzaSyDLnUcadFbYwblKlfSu3ae0_m3RZ0mwj6I',
+  authDomain: metaEnv.VITE_FIREBASE_AUTH_DOMAIN || rawConfig.authDomain || 'new-app-menu.firebaseapp.com',
+  projectId: metaEnv.VITE_FIREBASE_PROJECT_ID || rawConfig.projectId || 'new-app-menu',
+  storageBucket: metaEnv.VITE_FIREBASE_STORAGE_BUCKET || rawConfig.storageBucket || 'new-app-menu.firebasestorage.app',
+  messagingSenderId: metaEnv.VITE_FIREBASE_MESSAGING_SENDER_ID || rawConfig.messagingSenderId || '879388082803',
+  appId: metaEnv.VITE_FIREBASE_APP_ID || rawConfig.appId || '1:879388082803:web:a72c3ac62fddaab0666006',
   firestoreDatabaseId: metaEnv.VITE_FIREBASE_FIRESTORE_DATABASE_ID || rawConfig.firestoreDatabaseId || ''
 };
 

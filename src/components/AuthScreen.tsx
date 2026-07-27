@@ -130,14 +130,14 @@ export default function AuthScreen({ onAuthSuccess }: AuthScreenProps) {
   };
 
   return (
-    <div className="min-h-screen bg-[#FAF9F6] text-neutral-800 flex flex-col justify-center items-center p-4 font-sans selection:bg-[#C88A8A]/20 selection:text-neutral-900" id="auth-screen-root">
+    <div className="min-h-screen bg-[#FAF9F6] text-neutral-800 flex flex-col items-center justify-center p-4 sm:p-6 py-8 sm:py-12 font-sans selection:bg-[#C88A8A]/20 selection:text-neutral-900 overflow-y-auto" id="auth-screen-root">
       
       {/* Decorative center card */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
-        className="w-full max-w-md bg-white border border-[#EBE7DF] rounded-3xl p-8 sm:p-10 shadow-lg flex flex-col space-y-6"
+        className="w-full max-w-md bg-white border border-[#EBE7DF] rounded-3xl p-6 sm:p-10 shadow-lg flex flex-col space-y-6 my-auto"
         id="auth-card"
       >
         {/* Brand Header */}

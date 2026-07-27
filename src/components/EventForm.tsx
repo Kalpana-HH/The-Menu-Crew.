@@ -142,16 +142,16 @@ export default function EventForm({ onSubmit, onClose, initialEvent, prefilledDa
   };
 
   return (
-    <div className="fixed inset-0 bg-neutral-900/50 backdrop-blur-xs flex items-center justify-center z-50 p-4 overflow-y-auto">
+    <div className="fixed inset-0 bg-neutral-900/50 backdrop-blur-xs flex items-center justify-center z-50 p-4 sm:p-6 overflow-y-auto">
       <motion.div
         initial={{ opacity: 0, scale: 0.95, y: 15 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.95, y: 15 }}
-        className="bg-[#FAF9F6] border border-neutral-200 rounded-3xl w-full max-w-2xl max-h-[92vh] overflow-y-auto shadow-2xl flex flex-col"
+        className="bg-[#FAF9F6] border border-neutral-200 rounded-3xl w-full max-w-2xl my-auto max-h-[90vh] shadow-2xl flex flex-col overflow-hidden"
         id="event-form-container"
       >
         {/* Header */}
-        <div className={`px-6 py-5 border-b flex items-center justify-between rounded-t-3xl sticky top-0 z-10 bg-white ${
+        <div className={`px-6 py-5 border-b flex items-center justify-between rounded-t-3xl bg-white shrink-0 ${
           eventType === 'temple' ? 'border-amber-100' : 'border-rose-100'
         }`}>
           <div className="flex items-center gap-3">
@@ -182,23 +182,21 @@ export default function EventForm({ onSubmit, onClose, initialEvent, prefilledDa
           </button>
         </div>
 
-        {/* Content Wrapper */}
-        <div className="p-6 overflow-y-auto space-y-6 flex-1">
+        {/* Form Content Wrapper */}
+        <form onSubmit={handleSubmit} className="flex-1 flex flex-col min-h-0 overflow-hidden">
+          <div className="p-6 overflow-y-auto space-y-6 flex-1">
 
-          {/* Form Error Banner */}
-          {formError && (
-            <motion.div
-              initial={{ opacity: 0, y: -5 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="p-3.5 bg-red-50 border border-red-200 text-red-800 text-xs font-semibold rounded-2xl flex items-center gap-2"
-            >
-              <span className="w-2 h-2 rounded-full bg-red-600 shrink-0"></span>
-              <span>⚠️ {formError}</span>
-            </motion.div>
-          )}
-
-          {/* Form Content */}
-          <form onSubmit={handleSubmit} className="space-y-6">
+            {/* Form Error Banner */}
+            {formError && (
+              <motion.div
+                initial={{ opacity: 0, y: -5 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="p-3.5 bg-red-50 border border-red-200 text-red-800 text-xs font-semibold rounded-2xl flex items-center gap-2"
+              >
+                <span className="w-2 h-2 rounded-full bg-red-600 shrink-0"></span>
+                <span>⚠️ {formError}</span>
+              </motion.div>
+            )}
             {/* Template Render block */}
             {eventType === 'temple' ? (
               /* TEMPLE TEMPLATE */
@@ -441,33 +439,32 @@ export default function EventForm({ onSubmit, onClose, initialEvent, prefilledDa
                 )}
               </div>
             </div>
+          </div>
 
-            {/* Action buttons */}
-            <div className="pt-4 border-t border-neutral-200 flex items-center justify-end gap-3 bg-[#FAF9F6] py-2 sticky bottom-0 z-10">
-              <button
-                type="button"
-                onClick={onClose}
-                className="px-5 py-2.5 rounded-xl border border-neutral-200 hover:bg-neutral-100 text-neutral-600 text-xs font-semibold transition cursor-pointer"
-                id="cancel-event-btn"
-              >
-                Cancel
-              </button>
-              <button
-                type="submit"
-                className={`px-6 py-2.5 font-semibold rounded-xl text-xs uppercase tracking-wider transition shadow-sm flex items-center gap-1.5 cursor-pointer ${
-                  eventType === 'temple'
-                    ? 'bg-neutral-900 hover:bg-neutral-800 text-amber-100'
-                    : 'bg-[#C88A8A] hover:bg-[#B57878] text-white'
-                }`}
-                id="submit-event-btn"
-              >
-                <Check size={14} />
-                {initialEvent ? 'Save Specifications' : 'Create & Share Event'}
-              </button>
-            </div>
-          </form>
-
-        </div>
+          {/* Action buttons */}
+          <div className="px-6 py-4 border-t border-neutral-200 flex items-center justify-end gap-3 bg-[#FAF9F6] shrink-0">
+            <button
+              type="button"
+              onClick={onClose}
+              className="px-5 py-2.5 rounded-xl border border-neutral-200 hover:bg-neutral-100 text-neutral-600 text-xs font-semibold transition cursor-pointer"
+              id="cancel-event-btn"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              className={`px-6 py-2.5 font-semibold rounded-xl text-xs uppercase tracking-wider transition shadow-sm flex items-center gap-1.5 cursor-pointer ${
+                eventType === 'temple'
+                  ? 'bg-neutral-900 hover:bg-neutral-800 text-amber-100'
+                  : 'bg-[#C88A8A] hover:bg-[#B57878] text-white'
+              }`}
+              id="submit-event-btn"
+            >
+              <Check size={14} />
+              {initialEvent ? 'Save Specifications' : 'Create & Share Event'}
+            </button>
+          </div>
+        </form>
       </motion.div>
     </div>
   );

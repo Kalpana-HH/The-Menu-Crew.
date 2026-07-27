@@ -91,16 +91,16 @@ export default function SettingsModal({ currentUser, onClose, onSave }: Settings
   };
 
   return (
-    <div className="fixed inset-0 bg-neutral-900/50 backdrop-blur-xs flex items-center justify-center z-50 p-4">
+    <div className="fixed inset-0 bg-neutral-900/50 backdrop-blur-xs flex items-center justify-center z-50 p-4 sm:p-6 overflow-y-auto">
       <motion.div
         initial={{ opacity: 0, scale: 0.95, y: 15 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.95, y: 15 }}
-        className="bg-[#FAF9F6] border border-neutral-200 rounded-3xl w-full max-w-md shadow-2xl overflow-hidden"
+        className="bg-[#FAF9F6] border border-neutral-200 rounded-3xl w-full max-w-md my-auto shadow-2xl flex flex-col max-h-[90vh] overflow-hidden"
         id="settings-modal"
       >
         {/* Header */}
-        <div className={`px-6 py-5 border-b flex items-center justify-between bg-white ${
+        <div className={`px-6 py-5 border-b flex items-center justify-between bg-white shrink-0 ${
           isTempleUser ? 'border-amber-100' : 'border-rose-100'
         }`}>
           <div className="flex items-center gap-2.5">
@@ -130,132 +130,134 @@ export default function SettingsModal({ currentUser, onClose, onSave }: Settings
         </div>
 
         {/* Form Body */}
-        <form onSubmit={handleSubmit} className="p-6 space-y-4">
-          {error && (
-            <div className="bg-red-50 border border-red-100 text-red-700 p-3 rounded-xl text-xs font-semibold">
-              ⚠️ {error}
-            </div>
-          )}
-
-          {success && (
-            <div className="bg-emerald-50 border border-emerald-100 text-emerald-700 p-3 rounded-xl text-xs font-semibold text-center">
-              ✓ Profile changes saved successfully!
-            </div>
-          )}
-
-          {/* Name Field */}
-          <div>
-            <label className="block text-[10px] font-bold text-neutral-500 uppercase tracking-wider mb-1.5 flex items-center gap-1">
-              <UserIcon size={12} /> {isTempleUser ? 'Team Name' : 'Username'}
-            </label>
-            <input
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              className="w-full px-4 py-2.5 bg-white border border-neutral-200 rounded-xl text-neutral-800 text-xs focus:outline-hidden focus:ring-1 focus:ring-neutral-400 transition-all"
-              placeholder={isTempleUser ? "e.g., Sunday Seva Squad" : "e.g., Jane Doe"}
-              required
-            />
-          </div>
-
-          {/* Email Address Field */}
-          <div>
-            <label className="block text-[10px] font-bold text-neutral-500 uppercase tracking-wider mb-1.5 flex items-center gap-1">
-              <Mail size={12} /> Email Address
-            </label>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-2.5 bg-white border border-neutral-200 rounded-xl text-neutral-800 text-xs focus:outline-hidden focus:ring-1 focus:ring-neutral-400 transition-all"
-              placeholder="e.g., name@example.com"
-              required
-            />
-          </div>
-
-          {/* Google Calendar Integration Section */}
-          <div className="pt-3 border-t border-neutral-200/60 space-y-2">
-            <div className="flex items-center justify-between">
-              <label className="block text-[10px] font-bold text-neutral-500 uppercase tracking-wider flex items-center gap-1">
-                <Calendar size={12} /> Google Calendar Auto-Sync
-              </label>
-              <span className={`text-[10px] font-bold px-2.5 py-0.5 rounded-full border ${
-                autoSyncCalendar 
-                  ? 'bg-emerald-50 text-emerald-700 border-emerald-200' 
-                  : 'bg-neutral-100 text-neutral-500 border-neutral-200'
-              }`}>
-                {autoSyncCalendar ? '🟢 Active' : '⚪ Disabled'}
-              </span>
-            </div>
-
-            <div className="bg-white border border-neutral-200 rounded-xl p-3.5 space-y-2">
-              <div className="flex items-center justify-between gap-3">
-                <div className="space-y-0.5">
-                  <p className="text-xs font-semibold text-neutral-800">
-                    Auto-sync created events
-                  </p>
-                  <p className="text-[11px] text-neutral-500 leading-normal">
-                    Automatically send new gatherings & Sevas to your Google Calendar.
-                  </p>
-                </div>
-
-                <button
-                  type="button"
-                  onClick={() => setAutoSyncCalendar(!autoSyncCalendar)}
-                  className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-hidden ${
-                    autoSyncCalendar ? 'bg-[#C88A8A]' : 'bg-neutral-300'
-                  }`}
-                  role="switch"
-                  aria-checked={autoSyncCalendar}
-                  id="settings-calendar-toggle-btn"
-                >
-                  <span
-                    className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow-sm ring-0 transition duration-200 ease-in-out ${
-                      autoSyncCalendar ? 'translate-x-5' : 'translate-x-0'
-                    }`}
-                  />
-                </button>
-              </div>
-            </div>
-          </div>
-
-          {/* Password Reset Section */}
-          <div className="pt-3 border-t border-neutral-200/60 space-y-2">
-            <label className="block text-[10px] font-bold text-neutral-500 uppercase tracking-wider flex items-center gap-1">
-              <KeyRound size={12} /> Security & Password
-            </label>
-            
-            {resetSent ? (
-              <div className="p-3 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-xl text-xs space-y-1">
-                <div className="flex items-center gap-1.5 font-semibold">
-                  <Check size={14} className="text-emerald-600 shrink-0" />
-                  <span>Password Reset Link Dispatched!</span>
-                </div>
-                <p className="text-[11px] text-emerald-700 leading-relaxed">
-                  A reset link has been emailed to <strong>{email}</strong>. Open the email and click the button to set your new password.
-                </p>
-              </div>
-            ) : (
-              <div className="bg-white border border-neutral-200 rounded-xl p-3.5 space-y-2">
-                <p className="text-xs text-neutral-600 leading-relaxed">
-                  Need to change your password? We will send a secure password reset link directly to your email address.
-                </p>
-                <button
-                  type="button"
-                  onClick={handleSendResetEmail}
-                  disabled={sendingReset}
-                  className="w-full py-2 px-3 bg-[#FAF3F3] hover:bg-[#F5E6E6] border border-[#F0D5D5] text-[#9D5D5D] rounded-lg text-xs font-semibold flex items-center justify-center gap-1.5 transition cursor-pointer"
-                  id="settings-send-reset-link-btn"
-                >
-                  <Send size={13} />
-                  <span>{sendingReset ? 'Sending Reset Link...' : 'Email Me a Password Reset Link'}</span>
-                </button>
+        <form onSubmit={handleSubmit} className="flex-1 flex flex-col min-h-0 overflow-hidden">
+          <div className="p-6 space-y-4 overflow-y-auto flex-1">
+            {error && (
+              <div className="bg-red-50 border border-red-100 text-red-700 p-3 rounded-xl text-xs font-semibold">
+                ⚠️ {error}
               </div>
             )}
+
+            {success && (
+              <div className="bg-emerald-50 border border-emerald-100 text-emerald-700 p-3 rounded-xl text-xs font-semibold text-center">
+                ✓ Profile changes saved successfully!
+              </div>
+            )}
+
+            {/* Name Field */}
+            <div>
+              <label className="block text-[10px] font-bold text-neutral-500 uppercase tracking-wider mb-1.5 flex items-center gap-1">
+                <UserIcon size={12} /> {isTempleUser ? 'Team Name' : 'Username'}
+              </label>
+              <input
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                className="w-full px-4 py-2.5 bg-white border border-neutral-200 rounded-xl text-neutral-800 text-xs focus:outline-hidden focus:ring-1 focus:ring-neutral-400 transition-all"
+                placeholder={isTempleUser ? "e.g., Sunday Seva Squad" : "e.g., Jane Doe"}
+                required
+              />
+            </div>
+
+            {/* Email Address Field */}
+            <div>
+              <label className="block text-[10px] font-bold text-neutral-500 uppercase tracking-wider mb-1.5 flex items-center gap-1">
+                <Mail size={12} /> Email Address
+              </label>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full px-4 py-2.5 bg-white border border-neutral-200 rounded-xl text-neutral-800 text-xs focus:outline-hidden focus:ring-1 focus:ring-neutral-400 transition-all"
+                placeholder="e.g., name@example.com"
+                required
+              />
+            </div>
+
+            {/* Google Calendar Integration Section */}
+            <div className="pt-3 border-t border-neutral-200/60 space-y-2">
+              <div className="flex items-center justify-between">
+                <label className="block text-[10px] font-bold text-neutral-500 uppercase tracking-wider flex items-center gap-1">
+                  <Calendar size={12} /> Google Calendar Auto-Sync
+                </label>
+                <span className={`text-[10px] font-bold px-2.5 py-0.5 rounded-full border ${
+                  autoSyncCalendar 
+                    ? 'bg-emerald-50 text-emerald-700 border-emerald-200' 
+                    : 'bg-neutral-100 text-neutral-500 border-neutral-200'
+                }`}>
+                  {autoSyncCalendar ? '🟢 Active' : '⚪ Disabled'}
+                </span>
+              </div>
+
+              <div className="bg-white border border-neutral-200 rounded-xl p-3.5 space-y-2">
+                <div className="flex items-center justify-between gap-3">
+                  <div className="space-y-0.5">
+                    <p className="text-xs font-semibold text-neutral-800">
+                      Auto-sync created events
+                    </p>
+                    <p className="text-[11px] text-neutral-500 leading-normal">
+                      Automatically send new gatherings & Sevas to your Google Calendar.
+                    </p>
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={() => setAutoSyncCalendar(!autoSyncCalendar)}
+                    className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-hidden ${
+                      autoSyncCalendar ? 'bg-[#C88A8A]' : 'bg-neutral-300'
+                    }`}
+                    role="switch"
+                    aria-checked={autoSyncCalendar}
+                    id="settings-calendar-toggle-btn"
+                  >
+                    <span
+                      className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow-sm ring-0 transition duration-200 ease-in-out ${
+                        autoSyncCalendar ? 'translate-x-5' : 'translate-x-0'
+                      }`}
+                    />
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* Password Reset Section */}
+            <div className="pt-3 border-t border-neutral-200/60 space-y-2">
+              <label className="block text-[10px] font-bold text-neutral-500 uppercase tracking-wider flex items-center gap-1">
+                <KeyRound size={12} /> Security & Password
+              </label>
+              
+              {resetSent ? (
+                <div className="p-3 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-xl text-xs space-y-1">
+                  <div className="flex items-center gap-1.5 font-semibold">
+                    <Check size={14} className="text-emerald-600 shrink-0" />
+                    <span>Password Reset Link Dispatched!</span>
+                  </div>
+                  <p className="text-[11px] text-emerald-700 leading-relaxed">
+                    A reset link has been emailed to <strong>{email}</strong>. Open the email and click the button to set your new password.
+                  </p>
+                </div>
+              ) : (
+                <div className="bg-white border border-neutral-200 rounded-xl p-3.5 space-y-2">
+                  <p className="text-xs text-neutral-600 leading-relaxed">
+                    Need to change your password? We will send a secure password reset link directly to your email address.
+                  </p>
+                  <button
+                    type="button"
+                    onClick={handleSendResetEmail}
+                    disabled={sendingReset}
+                    className="w-full py-2 px-3 bg-[#FAF3F3] hover:bg-[#F5E6E6] border border-[#F0D5D5] text-[#9D5D5D] rounded-lg text-xs font-semibold flex items-center justify-center gap-1.5 transition cursor-pointer"
+                    id="settings-send-reset-link-btn"
+                  >
+                    <Send size={13} />
+                    <span>{sendingReset ? 'Sending Reset Link...' : 'Email Me a Password Reset Link'}</span>
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
 
           {/* Action buttons */}
-          <div className="pt-4 border-t border-neutral-200 flex items-center justify-end gap-2">
+          <div className="px-6 py-4 bg-[#FAF9F6] border-t border-neutral-200 flex items-center justify-end gap-2 shrink-0">
             <button
               type="button"
               onClick={onClose}

@@ -55,24 +55,25 @@ export default function ResetPasswordModal({ email, name, role, onComplete }: Re
   };
 
   return (
-    <div className="fixed inset-0 bg-neutral-900/60 backdrop-blur-xs flex items-center justify-center z-50 p-4 font-sans">
+    <div className="fixed inset-0 bg-neutral-900/60 backdrop-blur-xs flex items-center justify-center z-50 p-4 sm:p-6 font-sans overflow-y-auto">
       <motion.div
         initial={{ opacity: 0, scale: 0.95, y: 15 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
-        className="bg-[#FAF9F6] border border-neutral-200 rounded-3xl w-full max-w-md shadow-2xl overflow-hidden p-6 sm:p-8 space-y-6"
+        className="bg-[#FAF9F6] border border-neutral-200 rounded-3xl w-full max-w-md my-auto shadow-2xl flex flex-col max-h-[90vh] overflow-hidden"
         id="reset-password-modal"
       >
-        <div className="text-center space-y-2">
-          <span className="inline-block p-3.5 bg-[#FAF3F3] border border-[#F6EBEB] text-[#C88A8A] rounded-2xl text-2xl shadow-2xs">
-            🔒
-          </span>
-          <h2 className="font-serif text-xl font-semibold text-neutral-900">
-            Set Your New Password
-          </h2>
-          <p className="text-xs text-neutral-500">
-            Resetting password for <strong>{name}</strong> ({email})
-          </p>
-        </div>
+        <div className="p-6 sm:p-8 space-y-6 overflow-y-auto">
+          <div className="text-center space-y-2">
+            <span className="inline-block p-3.5 bg-[#FAF3F3] border border-[#F6EBEB] text-[#C88A8A] rounded-2xl text-2xl shadow-2xs">
+              🔒
+            </span>
+            <h2 className="font-serif text-xl font-semibold text-neutral-900">
+              Set Your New Password
+            </h2>
+            <p className="text-xs text-neutral-500">
+              Resetting password for <strong>{name}</strong> ({email})
+            </p>
+          </div>
 
         {error && (
           <div className="p-3.5 bg-red-50 border border-red-200 text-red-900 rounded-2xl text-xs font-semibold flex items-center gap-2">
@@ -155,6 +156,7 @@ export default function ResetPasswordModal({ email, name, role, onComplete }: Re
             </button>
           </form>
         )}
+        </div>
       </motion.div>
     </div>
   );
